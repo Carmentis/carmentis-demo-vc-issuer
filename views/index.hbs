@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>App</title>
+</head>
+<body>
+{{ message }}
+</body>
+
+<script src="/lib/index.umd.cjs"></script>
+<script>
+    window.onload = () => {
+        const createCarmentisJsonRpcPopup = window.CarmentisConnect.createCarmentisJsonRpcPopup;
+        console.log(createCarmentisJsonRpcPopup)
+        const popup = createCarmentisJsonRpcPopup({
+            relayUrl: 'https://relay.testnet.carmentis.io',
+            title: 'Authenticate with Carmentis Desk', // optional
+            request: {
+                jsonrpc: '2.0',
+                id: 1,
+                method: 'wr-auth-pk',
+                params: { base64EncodedChallenge: 'dGVzdA==' },
+            },
+
+            onMessage(message) {
+                console.log('Received message:', message);
+            },
+
+            onResponse(response) {
+                console.log('Success:', response.result);
+                popup.close();
+            },
+
+            onError(err) {
+                console.error('JSON-RPC error:', err.message);
+                popup.close();
+            },
+
+            onClose() {
+                console.log('Popup dismissed');
+            },
+        });
+
+        popup.open();
+    }
+</script>
+</html>
