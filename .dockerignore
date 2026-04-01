@@ -1,0 +1,12 @@
+.git
+.github
+node_modules
+dist
+keys
+coverage
+test
+*.spec.ts
+*.e2e-spec.ts
+.prettierrc
+eslint.config.mjs
+README.md
