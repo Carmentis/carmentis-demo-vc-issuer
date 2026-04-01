@@ -6,7 +6,7 @@ import {
   HttpStatus,
   Post,
 } from '@nestjs/common';
-import { IssuerService } from './issuer.service';
+import { IssuerService, RequestedCredentialType } from './issuer.service';
 
 class IssueCredentialDto {
   firstname: string;
@@ -17,6 +17,7 @@ class IssueCredentialDto {
   fi_vc_sha256?: string;
   walletPublicKey: string;
   challenge: string;
+  format?: 'sd-jwt' | 'sd-jwt-vc';
 }
 
 class VerifyCredentialDto {
@@ -51,9 +52,18 @@ export class IssuerController {
         HttpStatus.BAD_REQUEST,
       );
     }
+
+    const credentialType =
+      body.format === 'sd-jwt'
+        ? RequestedCredentialType.SD_JWT
+        : RequestedCredentialType.SD_JWT_VC;
+
     try {
-      const credential = await this.issuerService.issueCredential(body);
-      return { credential };
+      const credential = await this.issuerService.issueCredential(
+        body,
+        credentialType,
+      );
+      return { credential, format: body.format ?? 'sd-jwt-vc' };
     } catch (err) {
       throw new HttpException(
         err instanceof Error ? err.message : 'Failed to issue credential',

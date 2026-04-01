@@ -4,9 +4,9 @@ import { digest, generateSalt, ES256 } from '@sd-jwt/crypto-nodejs';
 import * as crypto from 'crypto';
 
 
-enum RequestedCredentialType {
-  SD_JWT,
-  SD_JWT_VC,
+export enum RequestedCredentialType {
+  SD_JWT = 'sd-jwt',
+  SD_JWT_VC = 'sd-jwt-vc',
 }
 
 interface CredentialRequestParams {
