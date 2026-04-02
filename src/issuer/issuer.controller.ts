@@ -24,7 +24,7 @@ class VerifyCredentialDto {
   credential: string;
 }
 
-@Controller('api')
+@Controller('vc')
 export class IssuerController {
   constructor(private readonly issuerService: IssuerService) {}
 
