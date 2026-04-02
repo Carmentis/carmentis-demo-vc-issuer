@@ -63,6 +63,7 @@ export class IssuerController {
         body,
         credentialType,
       );
+      console.log('Issuing following credential:', credential);
       return { credential, format: body.format ?? 'sd-jwt-vc' };
     } catch (err) {
       throw new HttpException(

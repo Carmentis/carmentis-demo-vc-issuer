@@ -137,6 +137,7 @@ export class IssuerService implements OnModuleInit {
         age_over_18: true,
       };
 
+      console.log("Issuing SD-JWT credential:", payload)
       return this.sdjwt.issue(payload, {
         _sd: [
           'iat',
